@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const UserSignUp = () => {
   const [firstname, setFirstname] = useState('');
@@ -35,6 +36,9 @@ const UserSignUp = () => {
   };
 
   return (
+
+    <KeyboardAwareScrollView>
+
     <View style={styles.container}>
       <TextInput
         style={styles.input}
@@ -95,6 +99,8 @@ const UserSignUp = () => {
       />
       <Button title="Register" onPress={handleRegistration} />
     </View>
+    </KeyboardAwareScrollView>
+
   );
 };
 
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 250,
   },
   input: {
     width: '80%',
