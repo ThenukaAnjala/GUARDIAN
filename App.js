@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Gyro from './components/GyroscopeComponent';
 import Notification from'./components/SafeNotification';
 import UserSignUp from './components/UserSignUp';
+import UserLogin from './components/UserLogin';
 
 
 // Keep the splash screen visible while we fetch resources
@@ -57,12 +58,13 @@ export default function App() {
     <GestureHandlerRootView style={{flex:1}}>
       <NavigationContainer>
         <Stack.Navigator
-        initialRouteName='UserSignUp'
+        initialRouteName='UserLogin'
         screenOptions={{headerShown:false}}
         >
           <Stack.Screen name = "GyroscopeComponent" component={Gyro} />
           <Stack.Screen name = "Notification" component={Notification} />
           <Stack.Screen name = "UserSignUp" component={UserSignUp} />
+          <Stack.Screen name = "UserLogin" component={UserLogin} />
         
 
         </Stack.Navigator>

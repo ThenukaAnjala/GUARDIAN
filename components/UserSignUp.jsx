@@ -2,30 +2,32 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet,Image } from 'react-native';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
+
 
 const UserSignUp = () => {
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [contactNo, setContactNo] = useState('');
-  const [bloodType, setBloodType] = useState('');
-  const [secondaryContact, setSecondaryContact] = useState('');
-  const [gender, setGender] = useState('');
-  const [language, setLanguage] = useState('');
+  const [Firstname, setFirstname] = useState('');
+  const [Lastname, setLastname] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [ContactNo, setContactNo] = useState('');
+  const [BloodType, setBloodType] = useState('');
+  const [SecondaryContact, setSecondaryContact] = useState('');
+  const [Gender, setGender] = useState('');
+  const [Language, setLanguage] = useState('');
 
   const handleRegistration = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/api/UserAuth/register', {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        password: password,
-        contactNo: contactNo,
-        bloodType: bloodType,
-        secondaryContact: secondaryContact,
-        gender: gender,
-        language: language,
+      const response = await axios.post('http://172.28.27.8:4000/api/UserAuth/register', {
+        Firstname: Firstname,
+        Lastname: Lastname,
+        Email: Email,
+        Password: Password,
+        ContactNo: ContactNo,
+        BloodType: BloodType,
+        SecondaryContact: SecondaryContact,
+        Gender: Gender,
+        Language: Language,
       });
       console.log('Registration Successful!', response.data);
       // Handle successful registration, such as navigating to another screen
@@ -34,6 +36,14 @@ const UserSignUp = () => {
       // Handle error, such as displaying an error message to the user
     }
   };
+
+  const navigation = useNavigation();
+
+  const handleFunction = () =>{
+    navigation.navigate("UserLogin");
+  }
+
+
 
   return (
 
@@ -52,60 +62,61 @@ const UserSignUp = () => {
         style={styles.input}
         placeholder="Firstname"
         onChangeText={(text) => setFirstname(text)}
-        value={firstname}
+        value={Firstname}
       />
       <TextInput
         style={styles.input}
         placeholder="Lastname"
         onChangeText={(text) => setLastname(text)}
-        value={lastname}
+        value={Lastname}
       />
       <TextInput
         style={styles.input}
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}
-        value={email}
+        value={Email}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         onChangeText={(text) => setPassword(text)}
-        value={password}
+        value={Password}
         secureTextEntry={true}
       />
       <TextInput
         style={styles.input}
         placeholder="Contact Number"
         onChangeText={(text) => setContactNo(text)}
-        value={contactNo}
+        value={ContactNo}
         keyboardType="numeric"
       />
       <TextInput
         style={styles.input}
         placeholder="Blood Type"
         onChangeText={(text) => setBloodType(text)}
-        value={bloodType}
+        value={BloodType}
       />
       <TextInput
         style={styles.input}
         placeholder="Secondary Contact"
         onChangeText={(text) => setSecondaryContact(text)}
-        value={secondaryContact}
+        value={SecondaryContact}
         keyboardType="numeric"
       />
       <TextInput
         style={styles.input}
         placeholder="Gender"
         onChangeText={(text) => setGender(text)}
-        value={gender}
+        value={Gender}
       />
       <TextInput
         style={styles.input}
         placeholder="Language"
         onChangeText={(text) => setLanguage(text)}
-        value={language}
+        value={Language}
       />
       <Button title="Register" onPress={handleRegistration} />
+      <Button title="Login" onPress={handleFunction} />
     </View>
     </KeyboardAwareScrollView>
 
