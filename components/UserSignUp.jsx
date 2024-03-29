@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet,Image } from 'react-native';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -40,6 +40,14 @@ const UserSignUp = () => {
     <KeyboardAwareScrollView>
 
     <View style={styles.container}>
+
+    <Image
+          source={require('../assets/Guardian.png')}
+          style={styles.image}
+          resizeMode="contain"
+        />
+
+
       <TextInput
         style={styles.input}
         placeholder="Firstname"
@@ -109,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 250,
+    marginTop: 10,
   },
   input: {
     width: '80%',
@@ -118,6 +126,11 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 10,
     padding: 10,
+  },
+  image: {
+    width: 250, 
+    height:250, 
+    marginTop:0, 
   },
 });
 
