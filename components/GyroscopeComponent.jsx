@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View , TouchableOpacity} from 'react-native';
+import { Text, View , TouchableOpacity, StyleSheet } from 'react-native';
 import { Gyroscope } from 'expo-sensors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import Notification from './SafeNotification';
+import UserAlertNotification from '../screens/UserAlertNotification';
 
 
 
 
-
-export default function GyroscopeComponent(){
+export default function Gyro() {
   const navigation = useNavigation();
 
   const handleFunction = () =>{
     navigation.navigate("Notification");
   }
 
- 
+  const UserAlertNotification = () =>{
+    navigation.navigate("UserAlertNotification");
+  }
 
 
 
@@ -70,24 +72,27 @@ export default function GyroscopeComponent(){
         <Text>x: {x}</Text>
         <Text >y: {y}</Text>
         <Text>z: {z}</Text>
-        <Text>result: {result}</Text>
+        <Text>magnitude: {result}</Text>
         <View>
-          <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} >
+          <TouchableOpacity style={styles.button} onPress={subscription ? _unsubscribe : _subscribe} >
             <Text>{subscription ? 'On' : 'Off'}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={_slow} >
+          <TouchableOpacity style={styles.button}  onPress={_slow} >
             <Text>Slow</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={_fast} >
+          <TouchableOpacity style={styles.button}  onPress={_fast} >
             <Text>Fast</Text>
           </TouchableOpacity>
 
          
 
-              <TouchableOpacity onPress={handleFunction} >
+              <TouchableOpacity style={styles.button}  onPress={handleFunction} >
                 <Text>Notification</Text>
               </TouchableOpacity>
 
+              <TouchableOpacity style={styles.button}  onPress={UserAlertNotification} >
+                <Text>UserNotification</Text>
+              </TouchableOpacity>
 
              
           
@@ -99,3 +104,18 @@ export default function GyroscopeComponent(){
  
  );
 }
+
+
+const styles = StyleSheet.create({
+   button: {
+      
+    backgroundColor: '#C2C8C2', 
+    padding: 10, 
+    borderRadius: 8, 
+    width:125,
+    height:50,
+    marginLeft:30,
+    marginTop:10,
+    
+    },
+  },)

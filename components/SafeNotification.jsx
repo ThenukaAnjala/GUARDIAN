@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Button, Platform } from 'react-native';
+import { Text, View, Button, Platform} from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +13,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function App() {
+export default function SafeNotification() {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -22,8 +22,12 @@ export default function App() {
 
   useEffect(() => {
     const handleFunction = () => {
-      navigation.navigate('Notification'); // Make sure 'Notification' matches the actual screen name
+      navigation.navigate('Notification'); 
     };
+
+   
+
+    
 
     const registerForPushNotificationsAsync = async () => {
       let token;
@@ -57,6 +61,9 @@ export default function App() {
       return token;
     };
 
+   
+
+
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -68,7 +75,13 @@ export default function App() {
       handleFunction();
     });
 
+    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+      // Navigate to the desired screen
+      navigation.navigate('UserAlertNotification');
+    });
+
     return () => {
+      subscription.remove();
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
@@ -80,9 +93,10 @@ export default function App() {
         const url = response.notification.request.content.data.url;
         Linking.openURL(url);
       });
-      return () => subscription.remove();
+    
     
     }, []);
+   
   }
 
   return (
@@ -111,10 +125,13 @@ export default function App() {
 async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: 'Here is the notification body',
+      title: "Are You Feeling Good ?",
+      body: 'Tap here to respond',
       data: { data: 'goes here' },
     },
-    trigger: { seconds: 2 },
+     trigger: { seconds: 2},
   });
 }
+
+
+
