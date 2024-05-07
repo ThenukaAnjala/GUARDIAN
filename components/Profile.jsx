@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, Image, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import  {jwtDecode } from 'jwt-decode';
-
+import jwtDecode from 'jwt-decode'; // Correct import statement
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -10,25 +9,18 @@ const Profile = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        
-        const storedToken = await AsyncStorage.getItem("token")
-            if (storedToken) {
-
-                const currentUser = jwtDecode(storedToken)
-                
-              
-              console.log(currentUser)
-              if (currentUser) {
-                console.log(currentUser.Email)
-                setUser(currentUser);
-              }
-            } else {
-              // Handle AsyncStorage error
-              console.log(err);
-            }
-        
-
-        
+        const storedToken = await AsyncStorage.getItem("token");
+        if (storedToken) {
+          const currentUser = jwtDecode(storedToken);
+          console.log(currentUser);
+          if (currentUser) {
+            console.log(currentUser.Email);
+            setUser(currentUser);
+          }
+        } else {
+          console.log("No token found in AsyncStorage");
+          // Handle the case when the stored token is null or undefined
+        }
       } catch (error) {
         console.error('Error retrieving user data:', error);
       }
@@ -37,23 +29,18 @@ const Profile = () => {
     getUserData();
   }, []);
 
-  const handleEditUser  = () =>{
-
-  }
+  const handleEditUser = () => {
+    // Add edit user functionality here
+  };
 
   const handleDeleteUser = () => {
-
-  }
+    // Add delete user functionality here
+  };
 
   return (
     <View style={styles.profileContainer}>
-      {/* First div for image upload */}
-      <View style={styles.imageContainer}>
-        {/* Centering the image */}
-        {user && user.image && (
-          <Image source={{ uri: user.image }} style={styles.avatar} />
-        )}
-      </View>
+
+      
 
       <View style={styles.infoContainer}>
         {user && (
