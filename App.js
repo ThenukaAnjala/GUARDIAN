@@ -7,7 +7,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Gyro from './components/GyroscopeComponent';
 import Notification from'./components/SafeNotification';
-import UserSignUp from './components/UserSignUp';
+import AddTrip from './components/start-trip-com/create-start.-trip';
+import ViewTrip from './components/start-trip-com/view-user-trip';
+import UpdateTrip from './components/start-trip-com/update-user-trip';
+import HelpTrip from './components/start-trip-com/user-emg-page';import UserSignUp from './components/UserSignUp';
 import UserLogin from './components/UserLogin';
 
 
@@ -56,20 +59,29 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{flex:1}}>
+      
       <NavigationContainer>
         <Stack.Navigator
-        initialRouteName='UserLogin'
+        // initialRouteName='UserLogin'
+        initialRouteName='AddTrip'
+
         screenOptions={{headerShown:false}}
         >
           <Stack.Screen name = "GyroscopeComponent" component={Gyro} />
           <Stack.Screen name = "Notification" component={Notification} />
           <Stack.Screen name = "UserSignUp" component={UserSignUp} />
           <Stack.Screen name = "UserLogin" component={UserLogin} />
-        
-
+          <Stack.Screen name="AddTrip" component={AddTrip} />
+          <Stack.Screen name="ViewTrip" component={ViewTrip}/>
+          <Stack.Screen name="UpdateTrip" component={UpdateTrip}/>
+          <Stack.Screen name="HelpTrip" component={HelpTrip}/>
         </Stack.Navigator>
       </NavigationContainer>
+      
     </GestureHandlerRootView>
+
+   
+    
 
 
 
