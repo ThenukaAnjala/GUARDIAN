@@ -36,7 +36,13 @@ const Login = () => {
       Alert.alert('Error', 'Invalid email or password. Please try again.');
       console.error('Error logging in:', error);
     }
-  };
+};
+
+    const handleForgotPassword = () => {
+        // Handle forgot password functionality here
+        // For example, navigate to the forgot password screen
+        console.log('Forgot Password');
+    };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -61,6 +67,7 @@ const Login = () => {
         style={styles.input}
       />
       <Button title="Login" onPress={handleLogin} style={styles.button} />
+      <Button title="Forgot Password" onPress={handleForgotPassword} style={styles.forgotPasswordButton} />
     </KeyboardAwareScrollView>
   );
 };

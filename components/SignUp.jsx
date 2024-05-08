@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert,Image } from 'react-native';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { useNavigation } from '@react-navigation/native';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -13,6 +14,12 @@ const SignUp = () => {
   const [secondaryContact, setSecondaryContact] = useState('');
   const [gender, setGender] = useState('');
   const [language, setLanguage] = useState('English');
+
+  const navigation = useNavigation();
+
+  const navigateToLogin = () => {
+    navigation.navigate('Login'); // Navigate to the Login screen
+  };
 
   const handleSignUp = async () => {
     // Validate the user input
@@ -48,14 +55,26 @@ const SignUp = () => {
         Gender: gender,
         Language: language
       });
-
+    
       // Handle successful registration
       Alert.alert('Success', 'You have successfully signed up!');
       // You may navigate the user to another screen or perform any other action here after successful signup
     } catch (error) {
       // Handle registration error
-      Alert.alert('Error', 'An error occurred while signing up. Please try again later.');
-      console.error('Error signing up:', error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('User Already Exist', error.response.status);
+        console.error('Response data:', error.response.data);
+        Alert.alert('Error', `Server responded with status code ${error.response.status}: ${error.response.data.message || 'Unknown error'}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        Alert.alert('Error', 'No response received from server');
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error('Error setting up request:', error.message);
+        Alert.alert('Error', 'An error occurred while sending the request');
+      }
     }
   };
 
@@ -128,6 +147,7 @@ const SignUp = () => {
         style={styles.input}
       />
       <Button title="Sign Up" onPress={handleSignUp} />
+      <Button title="Already User?" onPress={navigateToLogin} style={styles.alreadyUserButton} />
     </KeyboardAwareScrollView>
   );
 };

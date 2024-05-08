@@ -50,6 +50,8 @@ const Profile = () => {
             <Text>Email: {user.Email}</Text>
             <Text>Contact No: {user.ContactNo}</Text>
             <Text>Language: {user.Language}</Text>
+            <Text>Blood Type: {user.BloodType}</Text>
+            
           </View>
         )}
       </View>
