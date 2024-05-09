@@ -1,10 +1,13 @@
+// Import necessary libraries
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert,Image } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { useNavigation } from '@react-navigation/native';
 
+// Define SignUp component
 const SignUp = () => {
+  // Define state variables for user input fields
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -15,14 +18,17 @@ const SignUp = () => {
   const [gender, setGender] = useState('');
   const [language, setLanguage] = useState('English');
 
+  // Use the useNavigation hook to access navigation object
   const navigation = useNavigation();
 
+  // Function to navigate to the login screen
   const navigateToLogin = () => {
-    navigation.navigate('Login'); // Navigate to the Login screen
+    navigation.navigate('Login');
   };
 
+  // Function to handle signup
   const handleSignUp = async () => {
-    // Validate the user input
+    // Validate user input
     if (!firstName || !lastName || !email || !password || !contactNo || !bloodType) {
       Alert.alert('Error', 'All fields are required');
       return;
@@ -44,6 +50,7 @@ const SignUp = () => {
     }
 
     try {
+      // Send signup request to server
       const response = await axios.post('http://172.28.15.21:4000/api/UserAuth/register', {
         Firstname: firstName,
         Lastname: lastName,
@@ -78,6 +85,7 @@ const SignUp = () => {
     }
   };
 
+  // Render the component
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
 
@@ -89,6 +97,7 @@ const SignUp = () => {
         />
       </View>
 
+      {/* Input fields */}
       <TextInput
         placeholder="First Name"
         value={firstName}
@@ -146,12 +155,18 @@ const SignUp = () => {
         onChangeText={text => setLanguage(text)}
         style={styles.input}
       />
+      
+      {/* Signup button */}
       <Button title="Sign Up" onPress={handleSignUp} />
+
+      {/* Button to navigate to login screen */}
       <Button title="Already User?" onPress={navigateToLogin} style={styles.alreadyUserButton} />
+
     </KeyboardAwareScrollView>
   );
 };
 
+// Define styles
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -177,15 +192,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
-  
   },
-
   image: {
     width: 200,
     height: 200,
-    marginBottom:80
+    marginBottom: 80
+  },
+  alreadyUserButton: {
+    marginBottom: 10
+  },
+  forgotPasswordButton: {
+    marginTop: 10
   }
-
 });
 
+// Export SignUp component
 export default SignUp;

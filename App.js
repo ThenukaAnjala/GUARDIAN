@@ -58,7 +58,7 @@ export default function App() {
     <GestureHandlerRootView style={{flex:1}}>
       <NavigationContainer>
         <Stack.Navigator
-        initialRouteName='Profile'
+        initialRouteName='SignUp'
         screenOptions={{headerShown:false}}
         >
           <Stack.Screen name = "GyroscopeComponent" component={Gyro} />

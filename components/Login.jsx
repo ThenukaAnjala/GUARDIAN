@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
+  const navigation = useNavigation();
+
+  const handleSignUp = () => {
+    navigation.navigate('SignUp');
+  };
+
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
 
@@ -36,13 +42,13 @@ const Login = () => {
       Alert.alert('Error', 'Invalid email or password. Please try again.');
       console.error('Error logging in:', error);
     }
-};
+  };
 
-    const handleForgotPassword = () => {
-        // Handle forgot password functionality here
-        // For example, navigate to the forgot password screen
-        console.log('Forgot Password');
-    };
+  const handleForgotPassword = () => {
+    // Handle forgot password functionality here
+    // For example, navigate to the forgot password screen
+    console.log('Forgot Password');
+  };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -68,6 +74,9 @@ const Login = () => {
       />
       <Button title="Login" onPress={handleLogin} style={styles.button} />
       <Button title="Forgot Password" onPress={handleForgotPassword} style={styles.forgotPasswordButton} />
+      <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
+        <Text style={styles.signUpText}>Sign Up</Text>
+      </TouchableOpacity>
     </KeyboardAwareScrollView>
   );
 };
@@ -79,13 +88,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   imageContainer: {
-    marginBottom: 20, // Adjust margin as needed
+    marginBottom: 20, 
   },
   image1: {
-    width: 200, // Adjust width as needed
-    height: 200, // Adjust height as needed
-    marginTop: 200, // Adjust margin as needed
-    marginBottom: 20, // Adjust margin as needed
+    width: 200, 
+    height: 200, 
+    marginTop: 200, 
+    marginBottom: 20, 
   },
   input: {
     height: 40,
@@ -107,11 +116,26 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: '#007bff', // Button background color
-    color: '#fff', // Text color 
-    paddingHorizontal: 20, // Horizontal padding
+    backgroundColor: '#007bff', 
+    color: '#fff', 
+    paddingHorizontal: 20, 
     paddingVertical: 10, 
     borderRadius: 5, 
+  },
+  forgotPasswordButton: {
+    color: '#007bff', 
+    marginTop: 10, 
+  },
+  signUpButton: {
+    backgroundColor: '#28a745', 
+    paddingHorizontal: 20, 
+    paddingVertical: 10, 
+    borderRadius: 5, 
+    marginTop: 10, 
+  },
+  signUpText: {
+    color: '#fff',
+    fontWeight: 'bold',
   }
 });
 
