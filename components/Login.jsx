@@ -72,11 +72,11 @@ const Login = () => {
         secureTextEntry
         style={styles.input}
       />
-      <Button title="Login" onPress={handleLogin} style={styles.button} />
-      <Button title="Forgot Password" onPress={handleForgotPassword} style={styles.forgotPasswordButton} />
-      <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
-        <Text style={styles.signUpText}>Sign Up</Text>
+      <TouchableOpacity onPress={handleLogin} style={styles.button}>
+         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+      <Button title="Forgot Password" onPress={handleForgotPassword} style={styles.forgotPasswordButton} />
+      <Button title="Signup" onPress={handleSignUp} style={styles.signUpButton} />
     </KeyboardAwareScrollView>
   );
 };
@@ -116,11 +116,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: '#007bff', 
-    color: '#fff', 
+    backgroundColor: '#28a745', 
     paddingHorizontal: 20, 
     paddingVertical: 10, 
     borderRadius: 5, 
+    marginTop: 10, 
   },
   forgotPasswordButton: {
     color: '#007bff', 
@@ -136,6 +136,11 @@ const styles = StyleSheet.create({
   signUpText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center', // Center the text within the button
   }
 });
 
