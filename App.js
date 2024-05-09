@@ -12,6 +12,7 @@ import ViewTrip from './components/start-trip-com/view-user-trip';
 import UpdateTrip from './components/start-trip-com/update-user-trip';
 import HelpTrip from './components/start-trip-com/user-emg-page';import UserSignUp from './components/UserSignUp';
 import UserLogin from './components/UserLogin';
+import ViewTripInfo from './components/start-trip-com/user-profile'
 
 
 // Keep the splash screen visible while we fetch resources
@@ -67,14 +68,15 @@ export default function App() {
 
         screenOptions={{headerShown:false}}
         >
-          <Stack.Screen name = "GyroscopeComponent" component={Gyro} />
+          {/* <Stack.Screen name = "GyroscopeComponent" component={Gyro} />
           <Stack.Screen name = "Notification" component={Notification} />
           <Stack.Screen name = "UserSignUp" component={UserSignUp} />
-          <Stack.Screen name = "UserLogin" component={UserLogin} />
+          <Stack.Screen name = "UserLogin" component={UserLogin} /> */}
           <Stack.Screen name="AddTrip" component={AddTrip} />
           <Stack.Screen name="ViewTrip" component={ViewTrip}/>
           <Stack.Screen name="UpdateTrip" component={UpdateTrip}/>
           <Stack.Screen name="HelpTrip" component={HelpTrip}/>
+          <Stack.Screen name="ViewTripInfo" component={ViewTripInfo}/>
         </Stack.Navigator>
       </NavigationContainer>
       

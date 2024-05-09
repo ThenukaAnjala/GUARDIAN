@@ -8,12 +8,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from "axios";
 
 export default function ViewTrip(){
-
+    HelpTripHelpTrip
     const [trips, setTrips] = useState([]);
     const navigation = useNavigation();
 
     useEffect(() => {
-        axios.get("http://192.168.139.125:4000/api/StartTrips/get-trip")
+        axios.get("http://192.168.8.144:8081/api/StartTrips/get-trip")
             .then((res) => {
                 setTrips(res.data);
             })

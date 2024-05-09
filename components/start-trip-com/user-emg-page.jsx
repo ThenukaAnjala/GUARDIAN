@@ -8,8 +8,13 @@ export default function HelpTrip(){
 
     const navigation = useNavigation();
 
-    const handleFunction = () =>{
-        navigation.navigate("ViewTrip");
+    const handleViewTrip = () =>{
+        navigation.navigate("ViewTripInfo");
+        
+    }
+
+    const handleViewTripInfo = () => {
+        navigation.navigate("ViewTripInfo");
     }
 
     return (
@@ -22,8 +27,12 @@ export default function HelpTrip(){
                 <View style={styles.container}>
                     <Text style={styles.header}>Help</Text>
 
-                    <TouchableOpacity onPress={handleFunction} style={styles.button}>
+                    <TouchableOpacity onPress={handleViewTrip} style={styles.button}>
                         <Text style={styles.buttonText}>View Trip</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={handleViewTripInfo} style={styles.button}>
+                        <Text style={styles.buttonText}>View Trip Info</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>

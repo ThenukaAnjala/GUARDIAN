@@ -25,7 +25,7 @@ export default function UpdateTrip({ route }) {
 
   const getDetails = () => {
     axios
-      .get(`http://192.168.139.125:4000/api/StartTrips/get-trip/${tripId}`)
+      .get(`http://192.168.8.144:4000/api/StartTrips/get-trip/${tripId}`)
       .then((response) => {
         setTrips(response.data);
         setDestination(response.data.Destination);
@@ -42,7 +42,7 @@ export default function UpdateTrip({ route }) {
   const updateDetails = async () => {
     try {
       await axios.patch(
-        `http://192.168.139.125:4000/api/StartTrips/update-trip/${tripId}`,
+        `http://192.168.8.144:4000/api/StartTrips/update-trip/${tripId}`,
         {
           Destination,
           StartDateandTime,
@@ -52,7 +52,7 @@ export default function UpdateTrip({ route }) {
         }
       );
       console.log("updated");
-      navigation.navigate("ViewTrip");
+      navigation.navigate("ViewTripInfo");
     } catch (error) {
       console.log("Error in updating trip", error);
     }

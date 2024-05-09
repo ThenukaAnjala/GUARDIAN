@@ -17,21 +17,23 @@ export default function AddTrip(){
         
         
         const navigation = useNavigation();
-        // navigate to view trip info
-        const handleFunction = () =>{
-          navigation.navigate("ViewTrip");
-        }
+        
+       
     
     const handlesubmit = async () => {
         try {
+
+            const dummyUserId = "66041043db2760cbc43";
+
             const response = await axios.post(
-                "http://192.168.139.125:4000/api/StartTrips/create-trip",
+                "http://192.168.8.144:4000/api/StartTrips/create-trip",
                 {
                     Destination,
                     StartDateandTime,
                     ExpectedDurationOfTravel,
                     ModeOfTransportation,
-                    NumberOfTravelers
+                    NumberOfTravelers,
+                    UserId: dummyUserId
                 }
             );
 
@@ -64,7 +66,7 @@ export default function AddTrip(){
             <UserInputs name = "Start Date and Time:" value={StartDateandTime} setValue={setStartDateandTime}></UserInputs>
             <UserInputs name = "Mode Of Transportation" value={ExpectedDurationOfTravel} setValue={setExpectedTravelDurationTime}></UserInputs>
             <UserInputs name = "Expected Travel Duration" value={ModeOfTransportation} setValue={setModeOfTransportation} keyboardType='numeric' ></UserInputs>
-            <UserInputs name = "Number Of Travelers" value={NumberOfTravelers} setValue={setNumberOfTravelersn}></UserInputs>
+            <UserInputs name = "Number Of Travelers" value={NumberOfTravelers} keyboardType='numeric' setValue={setNumberOfTravelersn}></UserInputs>
             
             
 
