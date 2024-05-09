@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import jwtDecode from 'jwt-decode'; // Correct import statement
 
-const Profile = () => {
-  const [user, setUser] = useState(null);
+
+const Profile = ({ navigation }) => {
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const storedToken = await AsyncStorage.getItem("token");
-        if (storedToken) {
-          const currentUser = jwtDecode(storedToken);
-          console.log(currentUser);
-          if (currentUser) {
-            console.log(currentUser.Email);
-            setUser(currentUser);
-          }
+        const userId = await AsyncStorage.getItem('id');
+        if (userId) {
+          setUserId(userId);
         } else {
-          console.log("No token found in AsyncStorage");
-          // Handle the case when the stored token is null or undefined
+          console.log('No user ID found in AsyncStorage');
         }
       } catch (error) {
         console.error('Error retrieving user data:', error);
@@ -39,22 +33,9 @@ const Profile = () => {
 
   return (
     <View style={styles.profileContainer}>
-
-      
-
-      <View style={styles.infoContainer}>
-        {user && (
-          <View>
-            <Text>Firstname: {user.Firstname}</Text>
-            <Text>Lastname: {user.Lastname}</Text>
-            <Text>Email: {user.Email}</Text>
-            <Text>Contact No: {user.ContactNo}</Text>
-            <Text>Language: {user.Language}</Text>
-          </View>
-        )}
+      <View>
+        <Text>User ID: {userId}</Text>
       </View>
-
-    
       <View style={styles.buttonContainer}>
         <Button title="Edit User" onPress={handleEditUser} />
         <Button title="Delete User" onPress={handleDeleteUser} />
@@ -70,19 +51,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  imageContainer: {
-    marginBottom: 20,
-  },
-  avatar: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-  },
-  infoContainer: {
-    marginBottom: 20,
-  },
   buttonContainer: {
     flexDirection: 'row',
+    marginTop: 20,
   },
 });
 

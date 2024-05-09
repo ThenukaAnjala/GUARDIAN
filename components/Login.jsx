@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const Login = () => {
   const navigation = useNavigation();
 
@@ -20,34 +21,37 @@ const Login = () => {
       Alert.alert('Error', 'Please enter both email and password');
       return;
     }
-
+  
     try {
-      const response = await axios.post('http://172.28.15.21:4000/api/UserAuth/login', {
+      const response = await axios.post('http://192.168.8.101:4000/api/UserAuth/login', {
         Email,
         Password
       });
-
-      const token = response.data.token;
-
-      // Store the token securely
-      if (token) {
-        await AsyncStorage.setItem('token', token);
+  
+      console.log('Login response:', response.data);
+  
+      if (response.data.accessToken && response.data.id) {
+        // Store user data in AsyncStorage
+        await AsyncStorage.setItem('token', response.data.accessToken);
+        await AsyncStorage.setItem('id', response.data.id);
+        await AsyncStorage.setItem('name', response.data.Firstname);
+        await AsyncStorage.setItem('user', JSON.stringify(response.data));
+  
+        // Navigate to the profile page
+        navigation.navigate('Profile');
       } else {
-        // If token is null or undefined, remove it from AsyncStorage
         await AsyncStorage.removeItem('token');
+        Alert.alert('Error', 'Invalid email or password. Please try again.');
       }
-
+  
       Alert.alert('Success', 'You have successfully logged in!');
-      // Handle navigation or any other action after successful login
     } catch (error) {
-      Alert.alert('Error', 'Invalid email or password. Please try again.');
+      Alert.alert('Error', 'An error occurred while logging in. Please try again later.');
       console.error('Error logging in:', error);
     }
   };
 
   const handleForgotPassword = () => {
-    // Handle forgot password functionality here
-    // For example, navigate to the forgot password screen
     console.log('Forgot Password');
   };
 
