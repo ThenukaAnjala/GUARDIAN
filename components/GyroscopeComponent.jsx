@@ -3,7 +3,7 @@ import { Text, View , TouchableOpacity, StyleSheet } from 'react-native';
 import { Gyroscope } from 'expo-sensors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import BackgroundTimer from 'react-native-background-timer';
+import * as Notifications from 'expo-notifications';
 import { schedulePushNotification } from './SafeNotification';
 import Notification from './SafeNotification';
 import UserAlertNotification from '../screens/UserAlertNotification';
@@ -13,6 +13,20 @@ import UserAlertNotification from '../screens/UserAlertNotification';
 
 export default function GyroscopeComponent() {
   const navigation = useNavigation();
+
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+      navigation.navigate('UserAlertNotification'); 
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+
+
 
   const handleFunction = () =>{
     navigation.navigate("Notification");
@@ -76,10 +90,22 @@ export default function GyroscopeComponent() {
 
 
 
+
+ 
+
+
+
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      console.log(`Magnitude was less than 0.01 ${prevCountRef.current} times in the last 30 seconds`);
-      setCount(1); // Reset the count 30 seconds
+      console.log(`Magnitude was less than 0.01 ${prevCountRef.current - 1} times in the last 30 seconds`);
+      
+      if(prevCountRef.current >= 20){
+      
+      schedulePushNotification();
+
+    }
+      setCount(0); // Reset the count 30 seconds
     }, 30000); // 30000ms = 30 seconds
     return () => {
       clearInterval(intervalId); // Clear the interval when the component unmounts

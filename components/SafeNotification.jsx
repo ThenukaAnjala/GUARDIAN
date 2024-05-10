@@ -75,7 +75,7 @@ export default function SafeNotification() {
       handleFunction();
     });
 
-    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+     subscription = Notifications.addNotificationResponseReceivedListener(response => {
       // Navigate to the desired screen
       navigation.navigate('UserAlertNotification');
     });
