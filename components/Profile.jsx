@@ -23,7 +23,7 @@ const Profile = () => {
           
           setUserData(data);
         } else {
-          Alert.alert('Error', 'User not found');
+          Alert.alert('Error', 'Userrr not found');
         }
         setLoading(false);
       } catch (error) {
