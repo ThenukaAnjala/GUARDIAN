@@ -1,59 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
 
+const Profile = () => {
+  const route = useRoute();
 
-const Profile = ({ navigation }) => {
-  const [userId, setUserId] = useState(null);
+  const id = route.params.userId;
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getUserData = async () => {
+    const fetchUserData = async () => {
       try {
-        const userId = await AsyncStorage.getItem('id');
-        if (userId) {
-          setUserId(userId);
+        const response = await axios.get(`http://172.28.15.21:4000/api/UserAuth/${id}`);
+   
+
+        if (response.status === 200) {
+          const data = await response.data;
+          
+          setUserData(data);
         } else {
-          console.log('No user ID found in AsyncStorage');
+          Alert.alert('Error', 'User not found');
         }
+        setLoading(false);
       } catch (error) {
-        console.error('Error retrieving user data:', error);
+        console.error('Error fetching user data:', error);
+        setError('Error fetching user data');
+        setLoading(false);
       }
     };
+  
+    fetchUserData();
+  }, [id]);
 
-    getUserData();
-  }, []);
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
-  const handleEditUser = () => {
-    // Add edit user functionality here
-  };
-
-  const handleDeleteUser = () => {
-    // Add delete user functionality here
-  };
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>Error: {error}</Text>
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.profileContainer}>
-      <View>
-        <Text>User ID: {userId}</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button title="Edit User" onPress={handleEditUser} />
-        <Button title="Delete User" onPress={handleDeleteUser} />
-      </View>
+    <View style={styles.container}>
+      <Text>User Profile</Text>
+      {userData && (
+        <View>
+          <Text>First Name: {userData.Firstname}</Text>
+          <Text>Last Name: {userData.Lastname}</Text>
+          <Text>Email: {userData.Email}</Text>
+          {/* Display other user data as needed */}
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  profileContainer: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginTop: 20,
+    justifyContent: 'center',
   },
 });
 

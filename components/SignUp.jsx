@@ -51,7 +51,7 @@ const SignUp = () => {
 
     try {
       // Send signup request to server
-      const response = await axios.post('http://192.168.8.101:4000/api/UserAuth/register', {
+      const response = await axios.post('http://172.28.15.21:4000/api/UserAuth/register', {
         Firstname: firstName,
         Lastname: lastName,
         Email: email,
