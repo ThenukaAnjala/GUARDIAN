@@ -31,7 +31,7 @@ const Login = () => {
 
   const loginUser = async ({ Email, Password }) => { // Receive Email and Password as parameters
     try {
-      const response = await axios.post('http://172.28.15.21:4000/api/UserAuth/login', {
+      const response = await axios.post('http://172.28.128.153:4000/api/UserAuth/login', {
         Email,
         Password
       });
