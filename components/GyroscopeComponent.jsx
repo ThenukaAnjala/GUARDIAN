@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useRef  } from 'react';
 import { Text, View , TouchableOpacity, StyleSheet } from 'react-native';
 import { Gyroscope } from 'expo-sensors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import BackgroundTimer from 'react-native-background-timer';
+import { schedulePushNotification } from './SafeNotification';
 import Notification from './SafeNotification';
 import UserAlertNotification from '../screens/UserAlertNotification';
 
 
 
 
-export default function Gyro() {
+export default function GyroscopeComponent() {
   const navigation = useNavigation();
 
   const handleFunction = () =>{
@@ -29,6 +31,8 @@ export default function Gyro() {
 
     })
     const [subscription, setSubscription] = useState(null);
+    const [count, setCount] = useState(0);
+    const prevCountRef = useRef();
 
     useEffect(() => {
       console.log(`x: ${x}, y: ${y}, z: ${z}`);
@@ -36,7 +40,8 @@ export default function Gyro() {
 
     
 // find magnitude 
-    const result = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+    const magnitude = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+    let prevCount = 0;
 
   const _slow = () => Gyroscope.setUpdateInterval(1000);
   const _fast = () => Gyroscope.setUpdateInterval(16);
@@ -49,6 +54,39 @@ export default function Gyro() {
     );
   };
 
+
+
+  
+
+
+
+  useEffect(() => {
+    if (magnitude < 0.01) {
+      setCount(prevCount => {
+        console.log(prevCount);
+        return prevCount + 1;
+      });
+    }
+  }, [magnitude]);//when change magnitude this will run (looking at magnitude variable change)
+
+
+  useEffect(() => {
+    prevCountRef.current = count;
+  }, [count]);
+
+
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log(`Magnitude was less than 0.01 ${prevCountRef.current} times in the last 30 seconds`);
+      setCount(1); // Reset the count 30 seconds
+    }, 30000); // 30000ms = 30 seconds
+    return () => {
+      clearInterval(intervalId); // Clear the interval when the component unmounts
+    };
+  }, []);
+
+
   
 
   const _unsubscribe = () => {
@@ -58,6 +96,7 @@ export default function Gyro() {
 
   useEffect(() => {
     _subscribe();
+    _slow();
     return () => _unsubscribe();
   }, []);
 
@@ -72,7 +111,7 @@ export default function Gyro() {
         <Text>x: {x}</Text>
         <Text >y: {y}</Text>
         <Text>z: {z}</Text>
-        <Text>magnitude: {result}</Text>
+        <Text>magnitude: {magnitude}</Text>
         <View>
           <TouchableOpacity style={styles.button} onPress={subscription ? _unsubscribe : _subscribe} >
             <Text>{subscription ? 'On' : 'Off'}</Text>

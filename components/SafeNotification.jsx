@@ -122,7 +122,7 @@ export default function SafeNotification() {
   );
 }
 
-async function schedulePushNotification() {
+export async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Are You Feeling Good ?",
