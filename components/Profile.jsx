@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 const Profile = () => {
   const route = useRoute();
@@ -52,18 +53,27 @@ const Profile = () => {
   }
 
   return (
+    <KeyboardAwareScrollView contentContainerStyle={styles.container2}>
     <View style={styles.container}>
-      <Text>User Profile</Text>
+      <Text style={styles.heading}>User Profile</Text>
       {userData && (
         <View>
-          <Text>First Name: {userData.Firstname}</Text>
-          <Text>Last Name: {userData.Lastname}</Text>
-          <Text>Email: {userData.Email}</Text>
+          <Text  style={styles.output}>First Name: {userData.Firstname}</Text>
+          <Text  style={styles.output}>Last Name: {userData.Lastname}</Text>
+          <Text  style={styles.output}>Email: {userData.Email}</Text>
+
+          <Text  style={styles.output}>Contact No: {userData.ContactNo}</Text>
+          <Text  style={styles.output}>Blood Type: {userData.BloodType}</Text>
+          <Text  style={styles.output}>Secondary Contact: {userData.SecondaryContact}</Text>
+          <Text  style={styles.output}>Gender: {userData.Gender}</Text>
+          <Text  style={styles.output}>Language: {userData.Language}</Text>
           {/* Display other user data as needed */}
         </View>
       )}
     </View>
+    </KeyboardAwareScrollView>
   );
+  
 };
 
 const styles = StyleSheet.create({
@@ -72,6 +82,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  output: {
+    height: 40,
+    width:"150",
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 3,
+    shadowColor: "#000",
+    shadowOffset:{
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    
+  },
+
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 50,
+  },
+  container2:{
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  }
 });
 
 export default Profile;
