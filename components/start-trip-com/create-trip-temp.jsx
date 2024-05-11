@@ -18,6 +18,7 @@ const UserInputs = ({ name, value, setValue }) => {
 
 const styles = StyleSheet.create({
   inputs: {
+    paddingLeft:20,
     borderWidth: 0.5,
     height: 48,
     borderRadius: 10,

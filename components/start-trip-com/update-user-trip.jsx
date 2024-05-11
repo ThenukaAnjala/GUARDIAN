@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation} from "@react-navigation/native";
 import UserInputs from "./create-trip-temp";
 import UserInput from "./user-input-temp";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -41,7 +41,7 @@ export default function UpdateTrip({ route }) {
 
   const updateDetails = async () => {
     try {
-      await axios.patch(
+      const response = await axios.patch(
         `http://192.168.8.144:4000/api/StartTrips/update-trip/${tripId}`,
         {
           Destination,
@@ -51,8 +51,9 @@ export default function UpdateTrip({ route }) {
           NumberOfTravelers,
         }
       );
+  
       console.log("updated");
-      navigation.navigate("ViewTripInfo");
+      navigation.navigate("ViewTripInfo", { shouldRefresh: true });
     } catch (error) {
       console.log("Error in updating trip", error);
     }
@@ -81,6 +82,8 @@ export default function UpdateTrip({ route }) {
   const NumberOfTravelersnHandler = (text) => {
     setNumberOfTravelersn(text);
   };
+
+  
 
   return (
     <View>
